@@ -7,7 +7,7 @@ resource "aws_security_group" "allow_ssh" {
     from_port        = 22
     to_port          = 22
     protocol         = "tcp"
-    cidr_blocks      = ["45.163.87.89/32"]
+    cidr_blocks      = var.cidr_remote_access
   }
 
   egress {
@@ -33,7 +33,7 @@ resource "aws_security_group" "allow_ssh_us_east_2" {
     from_port        = 22
     to_port          = 22
     protocol         = "tcp"
-    cidr_blocks      = ["45.163.87.89/32"]
+    cidr_blocks      = var.cidr_remote_access
   }
 
   egress {

@@ -16,11 +16,11 @@ provider "aws" {
   region = "us-east-2"
 }
 
-resource "aws_instance" "dev" {
+resource "aws_instance" "dev" { 
   count                  = 1
-  ami                    = "ami-0dc2d3e4c0f9ebd18"
+  ami                    = var.amis.us_east_1
   instance_type          = "t2.micro"
-  key_name               = "terraform-aws"
+  key_name               = var.key_name
   vpc_security_group_ids = [aws_security_group.allow_ssh.id] // reference
   tags = {
     Name = "Instance ${count.index}" // e.g: Instance 1
@@ -28,9 +28,9 @@ resource "aws_instance" "dev" {
 }
 
 resource "aws_instance" "dev2" {
-  ami                    = "ami-0dc2d3e4c0f9ebd18"
+  ami                    = var.amis.us_east_1
   instance_type          = "t2.micro"
-  key_name               = "terraform-aws"
+  key_name               = var.key_name
   vpc_security_group_ids = [aws_security_group.allow_ssh.id]
   depends_on             = [aws_s3_bucket.dev2]
   tags = {
@@ -40,9 +40,9 @@ resource "aws_instance" "dev2" {
 
 resource "aws_instance" "dev3" {
   provider               = aws.us_east_2
-  ami                    = "ami-0233c2d874b811deb"
+  ami                    = var.amis.us_east_2
   instance_type          = "t2.micro"
-  key_name               = "terraform-aws"
+  key_name               = var.key_name
   vpc_security_group_ids = [aws_security_group.allow_ssh_us_east_2.id]
   depends_on             = [aws_dynamodb_table.basic_table]
   tags = {
